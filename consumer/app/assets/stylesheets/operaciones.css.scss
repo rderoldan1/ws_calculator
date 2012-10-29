@@ -1,0 +1,21 @@
+// Place all the styles related to the operaciones controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body{
+  background: #7cfc00;
+  .content{
+    background: #ffffff;
+    border-radius: 5px;
+    width: 70%;
+    min-height: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    .calcu{
+      width: 60%;
+      margin: 0 auto;
+      border: gray solid 1px;
+      padding: 10px;
+    }
+  }
+}

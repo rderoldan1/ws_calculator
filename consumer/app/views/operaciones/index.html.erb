@@ -1,0 +1,20 @@
+
+
+<table>
+
+
+<%= form_for :peticion, :url => '/operaciones/solution' do |f| %>
+    <tr>
+      <td><%= f.label :op1, "Operador 1" %></td>
+      <td><%= f.text_field :op1 %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :op2, "Operador 2" %></td>
+      <td><%= f.text_field :op2 %></td>
+    </tr>
+    <tr>
+      <td><%= f.select :operacion, @operations, :prompt => "escoja una operacion" %></td>
+      <td><%= f.submit :value => "Calcular" %> </td>
+    </tr>
+<% end %>
+</table>
