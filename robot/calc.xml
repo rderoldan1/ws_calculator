@@ -1,20 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <webservices>
-<webservice>
-<url>http://localhost:3000/wscalc1</url>
-<method>sumar</method>
-<params>
-<p1>40</p1>
-<p2>20</p2>
-</params>
-<result>60</result>
-</webservice>
-<webservice>
-<url>http://localhost:3000/wscalc2</url>
-<method>restar</method>
-<params>
-<p1>50</p1>
-<p2>20</p2>
-</params>
-<result>30</result>
-</webservice>
+  <webservice type="array">
+    <webservice>
+      <url>http://localhost:3000/wscalc1</url>
+      <method>sumar</method>
+      <params>
+        <p1>60</p1>
+        <p2>20</p2>
+      </params>
+      <resultado type="integer">80</resultado>
+    </webservice>
+    <webservice>
+      <url>http://localhost:3000/wscalc2</url>
+      <method>restar</method>
+      <params>
+        <p1>70</p1>
+        <p2>20</p2>
+      </params>
+      <resultado type="integer">50</resultado>
+    </webservice>
+    <webservice>
+      <url>http://localhost:3000/wscalc1</url>
+      <method>multiplicar</method>
+      <params>
+        <p1>60</p1>
+        <p2>20</p2>
+      </params>
+      <resultado type="integer">1200</resultado>
+    </webservice>
+    <webservice>
+      <url>http://localhost:3000/wscalc2</url>
+      <method>dividir</method>
+      <params>
+        <p1>70</p1>
+        <p2>20</p2>
+      </params>
+      <resultado type="float">3.5</resultado>
+    </webservice>
+  </webservice>
 </webservices>

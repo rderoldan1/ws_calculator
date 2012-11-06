@@ -1,25 +1,20 @@
-require 'rexml/document'
 require 'httparty'
 require 'json'
-require 'active_support/core_ext/array/conversions'
+require 'active_support/all'
 class Robot
-  include REXML
+
   def initialize
-    @document = Document.new File.new("#{File.dirname(__FILE__)}/calc.xml")
+    @document = File.open("#{File.dirname(__FILE__)}/calc.xml")
   end
 
   def run
-    operaciones = []
-    @document.elements.each('webservices/webservice') do |info|
-      operaciones << {:url => info.elements[1].text,
-                      :method => info.elements[2].text,
-                      :op_1 => info.elements[3][1].text,
-                      :op_2 => info.elements[3][3].text}
-    end
-    puts operaciones
-    operaciones.each do |operacion|
-      operacion[:resultado] = fetch_ws(operacion)
-      log(operacion[:resultado])
+    xml = Hash.from_xml(@document)
+    operaciones = {}
+    operaciones["webservice"] = []
+    xml["webservices"]["webservice"].each do |operacion|
+       operacion["resultado"] = fetch_ws(operacion)
+       log(operacion["resultado"])
+       operaciones["webservice"] << operacion
     end
 
     to_xml(operaciones)
@@ -27,28 +22,27 @@ class Robot
   end
 
   def fetch_ws(operation)
-      request = HTTParty.get("#{operation[:url]}/#{operation[:method]}/#{operation[:op_1]}/#{operation[:op_2]}.js")
+      url = operation["url"]
+      method = operation["method"]
+      op_1 = operation["params"]["p1"]
+      op_2 = operation["params"]["p2"]
+
+      request = HTTParty.get("#{url}/#{method}/#{op_1}/#{op_2}.js")
       result = JSON.parse(request.body)["resultado"]
+
   end
 
   def to_xml(arreglo)
+    puts  a = arreglo.to_xml({:root => "webservices"})
     text = "<webservices>\n"
-    arreglo.each do |operaciones|
-      text << "<webservice>\n"
-      text << "<url>#{operaciones[:url]}</url>\n"
-      text << "<method>#{operaciones[:method]}</method>\n"
-      text << "<params>\n"
-      text << "<p1>#{operaciones[:op_1]}</p1>\n"
-      text << "<p2>#{operaciones[:op_2]}</p2>\n"
-      text << "</params>\n"
-      text << "<result>#{operaciones[:resultado]}</result>\n"
-      text << "</webservice>\n"
+    begin
+      file = File.open("#{File.dirname(__FILE__)}/calc.xml", "w")
+      file.write(a)
+    rescue
+      puts "No se encuentra el arhivo XML"
+    ensure
+     file.close
     end
-    text << "</webservices>"
-
-    file = File.open("#{File.dirname(__FILE__)}/calc.xml", "w")
-    file.write(text)
-    file.close
   end
 
   def log(menssage)
@@ -56,5 +50,5 @@ class Robot
   end
 end
 
-  a = Robot.new
-  a.run
+a = Robot.new
+a.run
