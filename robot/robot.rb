@@ -33,11 +33,11 @@ class Robot
   end
 
   def to_xml(arreglo)
-    puts  a = arreglo.to_xml({:root => "webservices"})
+    xml = arreglo.to_xml({:root => "webservices"})
     text = "<webservices>\n"
     begin
       file = File.open("#{File.dirname(__FILE__)}/calc.xml", "w")
-      file.write(a)
+      file.write(xml)
     rescue
       puts "No se encuentra el arhivo XML"
     ensure

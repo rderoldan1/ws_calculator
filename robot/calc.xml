@@ -33,7 +33,7 @@
       <method>dividir</method>
       <params>
         <p1>70</p1>
-        <p2>20</p2>
+        <p2>40</p2>
       </params>
       <resultado type="float">3.5</resultado>
     </webservice>
